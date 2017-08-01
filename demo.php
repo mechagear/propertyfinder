@@ -11,10 +11,7 @@ $data = [
     [
         'departure' => 'MSK',
         'arrival' => 'NYZ',
-        'transport' => [
-            'type' => 'airport_bus',
-            'seatCode' => '56B',
-        ]
+        'transport' => 'airport_bus'
     ]
 ];
 

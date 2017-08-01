@@ -8,7 +8,7 @@
 
 namespace Mechagear\PF\Models\Cards;
 
-use Mechagear\PF\Models\Point;
+use Mechagear\PF\Models\Points\Point;
 use Mechagear\PF\Models\Transport\TransportInterface;
 
 /**
@@ -23,23 +23,20 @@ interface CardInterface
      * Arrival & departure are mandatory, because we can't departure from nothing or arrive to nothing
      * @param Point $departure
      * @param Point $arrival
+     * @param TransportInterface $transport
      */
     public function __construct(Point $departure, Point $arrival, TransportInterface $transport);
 
     /**
      * @return Point
      */
-    public function getDeparture();
+    public function getDeparture(): Point;
 
     /**
      * @return Point
      */
-    public function getArrival();
+    public function getArrival(): Point;
 
-    /**
-     * @return string
-     */
-    public function getHashCode();
 
     /**
      * @return string

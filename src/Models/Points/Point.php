@@ -6,15 +6,18 @@
  * Time: 22:36
  */
 
-namespace Mechagear\PF\Models;
+namespace Mechagear\PF\Models\Points;
+
+use Mechagear\PF\Models\Traits\Hashable;
 
 /**
  * Class Point
  * Describes arrival or departure point.
  * @package Mechagear\PF\Models
  */
-class Point
+class Point implements PointInterface
 {
+    use Hashable;
     /**
      * @var string
      */
@@ -29,7 +32,7 @@ class Point
      * Only getter defined cause we shouldn't allow to change point's name cause hash depends on it.
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -38,7 +41,7 @@ class Point
      * Separate method for getting a hash code required cause we can change hash code generation eventually.
      * @return string
      */
-    public function getHashCode()
+    public function getHashCode(): string
     {
         return md5($this->getName());
     }

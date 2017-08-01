@@ -18,35 +18,25 @@ abstract class TransportBase implements TransportInterface
     protected $seatCode = null;
 
     /**
-     * @param array $data
+     * @param string $type
      * @return TransportInterface
      * @throws \Exception
      */
-    public static function factory(array $data = [])
+    public static function factory(string $type): TransportInterface
     {
-        if ( empty($data['type']) ) {
+        if ( empty($type) ) {
             throw new \Exception("Type is required for Transport factory.");
         }
 
         // Let's do a little magic
-        $className = 'Transport' . str_replace('_', '', ucwords($data['type'], '_'));
+        $className = 'Transport' . str_replace('_', '', ucwords($type, '_')); // primitive camelizer
         $fullClassName = __NAMESPACE__ . '\\' . $className;
 
         if ( !class_exists($fullClassName) ) {
             throw new \Exception(sprintf("Class %s not found.", $fullClassName));
         }
 
-        $instance =  new $fullClassName();
-
-        // Calling all public setters (magic again)
-        foreach ( $data as $key => $value ) {
-            $method = 'set' . ucfirst($key);
-            if ( method_exists($instance, $method) ) {
-                call_user_func([$instance, $method], $value);
-            }
-        }
-
-        return $instance;
+        return new $fullClassName();
     }
 
     /**

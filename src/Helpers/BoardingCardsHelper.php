@@ -10,7 +10,7 @@ namespace Mechagear\PF\Helpers;
 
 
 use Mechagear\PF\Models\Cards\CardConcrete;
-use Mechagear\PF\Models\Point;
+use Mechagear\PF\Models\Points\Point;
 use Mechagear\PF\Models\Transport\TransportBase;
 
 class BoardingCardsHelper

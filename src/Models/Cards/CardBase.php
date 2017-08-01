@@ -8,7 +8,8 @@
 
 namespace Mechagear\PF\Models\Cards;
 
-use Mechagear\PF\Models\Point;
+use Mechagear\PF\Models\Points\Point;
+use Mechagear\PF\Models\Traits\Hashable;
 use Mechagear\PF\Models\Transport\TransportInterface;
 
 /**
@@ -18,6 +19,12 @@ use Mechagear\PF\Models\Transport\TransportInterface;
  */
 abstract class CardBase implements CardInterface
 {
+    use Hashable;
+
+    const BAGGAGE_UNKNOWN   = 0;
+    const BAGGAGE_AUTO      = 1;
+    const BAGGAGE_PLACE     = 2;
+
     /**
      * @var Point
      */
@@ -34,6 +41,24 @@ abstract class CardBase implements CardInterface
     protected $transport;
 
     /**
+     * Seat number (optional)
+     * @var string
+     */
+    protected $seatNumber = '';
+
+    /**
+     * Baggage delivery type (auto - auto transfer, place - dropzone, unknown - by yourself e.t.c.)
+     * @var int
+     */
+    protected $baggageType = self::BAGGAGE_UNKNOWN;
+
+    /**
+     * Baggage place number
+     * @var string
+     */
+    protected $baggagePlace = '';
+
+    /**
      * CardBase constructor.
      * @param Point $departure
      * @param Point $arrival
@@ -48,7 +73,7 @@ abstract class CardBase implements CardInterface
     /**
      * @return Point
      */
-    public function getDeparture()
+    public function getDeparture(): Point
     {
         return $this->departure;
     }
@@ -56,9 +81,69 @@ abstract class CardBase implements CardInterface
     /**
      * @return Point
      */
-    public function getArrival()
+    public function getArrival(): Point
     {
         return $this->arrival;
+    }
+
+    /**
+     * @return TransportInterface
+     */
+    public function getTransport(): TransportInterface
+    {
+        return $this->transport;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeatNumber(): string
+    {
+        return $this->seatNumber;
+    }
+
+    /**
+     * @param string $seatNumber
+     * @return $this
+     */
+    public function setSeatNumber(string $seatNumber)
+    {
+        $this->seatNumber = $seatNumber;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBaggageType(): int
+    {
+        return $this->baggageType;
+    }
+
+    /**
+     * @param int $baggageType
+     * @return $this
+     */
+    public function setBaggageType(int $baggageType)
+    {
+        $this->baggageType = $baggageType;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaggagePlace(): string
+    {
+        return $this->baggagePlace;
+    }
+
+    /**
+     * @param string $baggagePlace
+     */
+    public function setBaggagePlace(string $baggagePlace)
+    {
+        $this->baggagePlace = $baggagePlace;
     }
 
     /**
