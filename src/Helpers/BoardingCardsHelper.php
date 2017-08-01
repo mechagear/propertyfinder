@@ -10,6 +10,8 @@ namespace Mechagear\PF\Helpers;
 
 
 use Mechagear\PF\Models\Cards\CardConcrete;
+use Mechagear\PF\Models\Collections\BoardingCardsCollection;
+use Mechagear\PF\Models\Collections\CollectionInterface;
 use Mechagear\PF\Models\Points\Point;
 use Mechagear\PF\Models\Transport\TransportBase;
 
@@ -17,15 +19,13 @@ class BoardingCardsHelper
 {
     /**
      * @param array $boardingCardsList
-     * @return array|\SplFixedArray
+     * @return CollectionInterface
      * @throws \Exception
      */
-    public static function fromArray(array $boardingCardsList = [])
+    public static function fromArray(array $boardingCardsList = []): CollectionInterface
     {
-        $collectionSize = count($boardingCardsList);
-        $result = new \SplFixedArray($collectionSize); // A little bit faster than regular array
+        $result = new BoardingCardsCollection();
 
-        $i = 0;
         foreach ( $boardingCardsList as $boardingCard ) {
             if ( empty($boardingCard['departure']) || empty($boardingCard['arrival']) || empty($boardingCard['transport']) ) {
                 // TODO: use concrete Exception type (InvalidParameters or something else)
@@ -33,8 +33,7 @@ class BoardingCardsHelper
             }
 
             $card = new CardConcrete(new Point($boardingCard['departure']), new Point($boardingCard['arrival']), TransportBase::factory($boardingCard['transport']));
-            $result[$i] = $card;
-            ++$i;
+            $result->add($card);
         }
         return $result;
     }

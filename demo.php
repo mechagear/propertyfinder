@@ -9,16 +9,26 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $data = [
     [
-        'departure' => 'MSK',
-        'arrival' => 'NYZ',
+        'departure' => 'NYZ',
+        'arrival' => 'MSK',
         'transport' => 'airport_bus'
-    ]
+    ],
+    [
+        'departure' => 'SPB',
+        'arrival' => 'JPN',
+        'transport' => 'airplane'
+    ],
+    [
+        'departure' => 'MSK',
+        'arrival' => 'SPB',
+        'transport' => 'train'
+    ],
 ];
 
 $collection = \Mechagear\PF\Helpers\BoardingCardsHelper::fromArray($data);
 
 
-var_dump($collection);
+var_dump($collection->sorted());
 
 foreach ( $collection as $card ) {
     echo $card . "\n";
