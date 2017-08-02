@@ -11,8 +11,10 @@ namespace Mechagear\PF\Models\Transport;
 
 class TransportBus extends TransportBase
 {
-
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return "a bus";
     }

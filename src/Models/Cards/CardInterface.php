@@ -28,15 +28,16 @@ interface CardInterface
     public function __construct(Point $departure, Point $arrival, TransportInterface $transport);
 
     /**
+     * Returns departure point
      * @return Point
      */
     public function getDeparture(): Point;
 
     /**
+     * Returns arrival point
      * @return Point
      */
     public function getArrival(): Point;
-
 
     /**
      * @return string

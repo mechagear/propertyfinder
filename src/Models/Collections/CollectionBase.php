@@ -8,7 +8,11 @@
 
 namespace Mechagear\PF\Models\Collections;
 
-
+/**
+ * Class CollectionBase
+ * Common collection operations implementation.
+ * @package Mechagear\PF\Models\Collections
+ */
 abstract class CollectionBase implements CollectionInterface, \Iterator
 {
     /**

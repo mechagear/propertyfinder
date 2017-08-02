@@ -11,5 +11,5 @@ namespace Mechagear\PF\Models\Points;
 
 interface PointInterface
 {
-
+    public function __toString(): string;
 }

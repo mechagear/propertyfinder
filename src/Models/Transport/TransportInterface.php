@@ -12,8 +12,7 @@ namespace Mechagear\PF\Models\Transport;
 interface TransportInterface
 {
     /**
-     *
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 }

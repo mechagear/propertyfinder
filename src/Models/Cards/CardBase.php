@@ -41,13 +41,19 @@ abstract class CardBase implements CardInterface
     protected $transport;
 
     /**
+     * Gate number (optional)
+     * @var string
+     */
+    protected $gate = '';
+
+    /**
      * Seat number (optional)
      * @var string
      */
     protected $seatNumber = '';
 
     /**
-     * Baggage delivery type (auto - auto transfer, place - dropzone, unknown - by yourself e.t.c.)
+     * Baggage delivery type (auto - auto transfer, place - dropzone, unknown - take by yourself e.t.c.)
      * @var int
      */
     protected $baggageType = self::BAGGAGE_UNKNOWN;
@@ -92,6 +98,22 @@ abstract class CardBase implements CardInterface
     public function getTransport(): TransportInterface
     {
         return $this->transport;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGate(): string
+    {
+        return $this->gate;
+    }
+
+    /**
+     * @param string $gate
+     */
+    public function setGate(string $gate)
+    {
+        $this->gate = $gate;
     }
 
     /**
@@ -156,9 +178,32 @@ abstract class CardBase implements CardInterface
         return $this->getDeparture()->getHashCode();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        $resultStr = sprintf("Take %s from %s to %s.", $this->transport, $this->getDeparture(), $this->getArrival());
+        $templateString = "Take %s from %s to %s. ";
+
+        if ( !empty($this->getGate()) && !empty($this->getSeatNumber()) ) {
+            $seatGateString = sprintf("Gate %s, seat %s. ", $this->getGate(), $this->getSeatNumber());
+        } elseif ( !empty($this->getSeatNumber()) ) {
+            $seatGateString = sprintf("Sit in seat %s. ", $this->getSeatNumber());
+        } else {
+            $seatGateString = "No seat assignment. ";
+        }
+
+        $templateString .= $seatGateString;
+
+        switch ( $this->baggageType ) {
+            case self::BAGGAGE_AUTO:
+                $templateString .= "Baggage will we automatically transferred from your last leg. ";
+                break;
+            case self::BAGGAGE_PLACE:
+                $templateString .= sprintf("Baggage drop at ticket counter %s. ", $this->baggagePlace);
+                break;
+        }
+        $resultStr = sprintf($templateString, $this->transport, $this->getDeparture(), $this->getArrival());
         return $resultStr;
     }
 }

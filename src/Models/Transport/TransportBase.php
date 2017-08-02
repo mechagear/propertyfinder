@@ -8,15 +8,14 @@
 
 namespace Mechagear\PF\Models\Transport;
 
+use Mechagear\PF\Helpers\CaseHelper;
 
+/**
+ * Class TransportBase
+ * @package Mechagear\PF\Models\Transport
+ */
 abstract class TransportBase implements TransportInterface
 {
-    /**
-     * Seat number/code. By default - without seat reservation.
-     * @var string
-     */
-    protected $seatCode = null;
-
     /**
      * @param string $type
      * @return TransportInterface
@@ -29,33 +28,13 @@ abstract class TransportBase implements TransportInterface
         }
 
         // Let's do a little magic
-        $className = 'Transport' . str_replace('_', '', ucwords($type, '_')); // primitive camelizer
+        $className = 'Transport' . CaseHelper::camelize($type);
         $fullClassName = __NAMESPACE__ . '\\' . $className;
 
         if ( !class_exists($fullClassName) ) {
-            throw new \Exception(sprintf("Class %s not found.", $fullClassName));
+            throw new \Exception(sprintf("Class %s not found.", $fullClassName), 801);
         }
 
         return new $fullClassName();
     }
-
-    /**
-     * @return string
-     */
-    public function getSeatCode(): string
-    {
-        return $this->seatCode;
-    }
-
-    /**
-     * @param string $seatCode
-     * @return $this
-     */
-    public function setSeatCode(string $seatCode)
-    {
-        $this->seatCode = $seatCode;
-        return $this;
-    }
-
-
 }
