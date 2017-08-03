@@ -9,27 +9,35 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $data = [
     [
-        'departure' => 'NYZ',
-        'arrival' => 'MSK',
-        'transport' => 'airport_bus',
+        "departure"     => "Madrid",
+        "arrival"       => "Barcelona",
+        "transport"     => "train",
+        "seat_number"   => "45B",
     ],
     [
-        'departure' => 'SPB',
-        'arrival' => 'JPN',
-        'transport' => 'airplane',
-        'seat_number' => '54B',
-        'gate'      => '22',
-        'baggage_type' => \Mechagear\PF\Models\Cards\CardBase::BAGGAGE_PLACE,
-        'baggage_place' => '512',
+        "departure"     => "Barcelona",
+        "arrival"       => "Gerona Airport",
+        "transport"     => "airport_bus",
     ],
     [
-        'departure' => 'MSK',
-        'arrival' => 'SPB',
-        'transport' => 'train',
-        'seat_number' => '12',
-        'baggage_type' => \Mechagear\PF\Models\Cards\CardBase::BAGGAGE_AUTO,
+        "departure"     => "Gerona Airport",
+        "arrival"       => "Stockholm",
+        "transport"     => "airplane",
+        "gate"          => "45B",
+        "seat_number"   => "3A",
+        "baggage_type"  => \Mechagear\PF\Models\Cards\CardBase::BAGGAGE_PLACE,
+        "baggage_place" => "344",
     ],
+    [
+        "departure"     => "Stockholm",
+        "arrival"       => "New York JFK",
+        "transport"     => "airplane",
+        "gate"          => "22",
+        "seat_number"   => "7B",
+        "baggage_type"  => \Mechagear\PF\Models\Cards\CardBase::BAGGAGE_AUTO,
+    ]
 ];
 
 $collection = \Mechagear\PF\Helpers\BoardingCardsHelper::fromArray($data);
 echo $collection->sorted();
+exit(0);
